@@ -74,7 +74,15 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route GET /api/users/profile
 // @access Private
 const getUserProfile = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Get User Profile' })
+
+    const user = {
+        _id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+        isAdmin: req.user.isAdmin
+    }
+
+    res.status(200).json(user)
 });
 
 // @desc Uodate user profile
