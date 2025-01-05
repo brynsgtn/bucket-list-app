@@ -7,7 +7,7 @@ const generateToken = (res, userId) => {
         httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict',
-        maxAge: Number.MAX_SAFE_INTEGER 
+        maxAge: 30 * 24 * 60 * 60 * 1000
     });
     
 };
