@@ -4,14 +4,17 @@ import {
     createBucketlist,
     updateBucketlist,
     deleteBucketlist
-};
+} from '../controllers/bucketlistController.js';
+import { protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 router.route('/')
-    .get(displayBucketlist)
-    .post(createBucketlist)
+    .get(protect, displayBucketlist)
+    .post(protect, createBucketlist);
 
-router.route('/bucketlist/:id')
-    .put(updateBucketlist)
-    .delete(deleteBucketlist)
+router.route('/:id')
+    .put(protect, updateBucketlist)
+    .delete(protect, deleteBucketlist);
+
+export default router;

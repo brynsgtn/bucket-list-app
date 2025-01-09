@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import connectDB from './config/db.js';
 const PORT = process.env.PORT || 4000;
-import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/userRoute.js';
+import bucketlistRoutes from './routes/bucketlistRoute.js';
 
 connectDB();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
+app.use('/api/bucketlist', bucketlistRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to user access app API')
