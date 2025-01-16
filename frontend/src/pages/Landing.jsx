@@ -6,7 +6,6 @@ import Header from "../components/Header";
 const Landing = () => {
     return (
         <>
-            <Header />
             <div className="h-fit bg-gradient-to-b from-gray-100 via-white to-indigo-56">
                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-54 font-sans">
                     <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
