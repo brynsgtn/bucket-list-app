@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
     function handleClick() {
@@ -8,7 +9,7 @@ const Header = () => {
             collapseMenu.style.display = 'block';
         }
     }
-
+    const { userInfo } = useSelector((state) => state.auth);
 
     return (
         <header className="flex shadow-md py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
@@ -60,20 +61,51 @@ const Header = () => {
                                 My Bucket List
                             </Link>
                         </li>
+                        <li className="block lg:hidden lg:border-b border-gray-300 lg:py-3 px-3">
+                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
+                                Logout
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
                 <div className="flex max-lg:ml-auto space-x-4">
-                    <Link to='/login'>
-                        <button className="hidden lg:block px-4 py-2 text-sm rounded-full font-bold text-gray-500 border-2 bg-transparent hover:bg-gray-50 transition-all ease-in-out duration-300">
-                            Login
-                        </button>
-                    </Link>
-                    <Link to='/register'>
-                        <button className="hidden lg:block px-4 py-2 text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
-                            Sign up
-                        </button>
-                    </Link>
+                    {userInfo ? (
+                        <div className="group inline-block">
+                            <p className="hidden lg:block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:text-[#007bff]">
+                                {userInfo.name}
+                            </p>
+                            {/* Dropdown Menu */}
+                            <div className="absolute hidden group-hover:block right-0 w-48 bg-white shadow-md rounded-lg overflow-hidden">
+                                <Link
+                                    to="/profile"
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                >
+                                    Profile
+                                </Link>
+                                <button
+  
+                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <Link to='/login'>
+                                <button className="hidden lg:block px-4 py-2 text-sm rounded-full font-bold text-gray-500 border-2 bg-transparent hover:bg-gray-50 transition-all ease-in-out duration-300">
+                                    Login
+                                </button>
+                            </Link>
+                            <Link to='/register'>
+                                <button className="hidden lg:block px-4 py-2 text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
+                                    Sign up
+                                </button>
+                            </Link>
+                        </>
+                    )}
+
 
 
                     <button id="toggleOpen" className="lg:hidden" onClick={handleClick}>
