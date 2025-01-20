@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useLogoutMutation } from "../slices/userApiSlice";
@@ -11,6 +11,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [logoutApiCall] = useLogoutMutation();
 
@@ -77,25 +78,37 @@ const Header = () => {
                             </a>
                         </li>
                         <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-                            <Link to='/' className="hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]">
+                            <Link
+                                to="/"
+                                className={`block font-semibold text-[15px] ${location.pathname === '/' ? 'text-[#007bff]' : 'text-gray-500'
+                                    }`}
+                            >
                                 Home
                             </Link>
 
                         </li>
                         <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
+                            <Link
+                                to="/bucket"
+                                className={`block font-semibold text-[15px] ${location.pathname === '/bucket' ? 'text-[#007bff]' : 'text-gray-500'
+                                    }`}
+                            >
                                 My Bucket List
                             </Link>
                         </li>
                         <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
+                            <Link
+                                to="/profile"
+                                className={`block font-semibold text-[15px] ${location.pathname === '/profile' ? 'text-[#007bff]' : 'text-gray-500'
+                                    }`}
+                            >
                                 My Profile
                             </Link>
                         </li>
                         <li className="block lg:hidden lg:border-b border-gray-300 lg:py-3 px-3">
-                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]" onClick={logoutHandler}>
+                            <button className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]" onClick={logoutHandler}>
                                 Logout
-                            </Link>
+                            </button>
                         </li>
                     </ul>
                 </div>
