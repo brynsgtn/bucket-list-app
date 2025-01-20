@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const Header = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     function handleClick() {
         if (collapseMenu.style.display === 'block') {
             collapseMenu.style.display = 'none';
@@ -61,6 +68,11 @@ const Header = () => {
                                 My Bucket List
                             </Link>
                         </li>
+                        <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
+                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
+                                My Profile
+                            </Link>
+                        </li>
                         <li className="block lg:hidden lg:border-b border-gray-300 lg:py-3 px-3">
                             <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
                                 Logout
@@ -71,25 +83,46 @@ const Header = () => {
 
                 <div className="flex max-lg:ml-auto space-x-4">
                     {userInfo ? (
-                        <div className="group inline-block">
-                            <p className="hidden lg:block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:text-[#007bff]">
+                        <div className="relative inline-block">
+                            {/* User Name with Arrow Icon */}
+                            <div
+                                className="hidden lg:flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:text-[#007bff]"
+                                onClick={toggleDropdown}
+                            >
                                 {userInfo.name}
-                            </p>
-                            {/* Dropdown Menu */}
-                            <div className="absolute hidden group-hover:block right-0 w-48 bg-white shadow-md rounded-lg overflow-hidden">
-                                <Link
-                                    to="/profile"
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                <svg
+                                    className={`ml-2 w-4 h-4 transform transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"
+                                        }`}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
                                 >
-                                    Profile
-                                </Link>
-                                <button
-  
-                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
-                                >
-                                    Logout
-                                </button>
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M19 9l-7 7-7-7"
+                                    />
+                                </svg>
                             </div>
+
+                            {/* Dropdown Menu */}
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 w-48 bg-white shadow-md rounded-lg overflow-hidden mt-2 z-50">
+                                    <Link
+                                        to="/profile"
+                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                    >
+                                        Profile
+                                    </Link>
+                                    <button
+                                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <>
