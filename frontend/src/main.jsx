@@ -14,6 +14,7 @@ import Landing from './pages/Landing.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import BucketList from './pages/BucketList.jsx';
+import Profile from './pages/Profile.jsx';
 
 
 const router = createBrowserRouter(
@@ -23,10 +24,10 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/bucket' element={<BucketList />} />
-      {/* Private Routes
-      <Route path='' element={<PrivateRoute />}>
-        <Route path='/profile' element={<ProfileScreen />} />
-      </Route> */}
+      {/* Private Routes */}
+      {/* <Route path='' element={<PrivateRoute />}> */}
+        <Route path='/profile' element={<Profile />} />
+      {/* </Route> */}
     </Route>
   )
 )
