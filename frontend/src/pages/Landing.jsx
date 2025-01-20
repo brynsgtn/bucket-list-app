@@ -9,11 +9,11 @@ const Landing = () => {
 
     return (
         <>
-            <div className="h-fit bg-gradient-to-b from-gray-100 via-white to-indigo-56">
+            <div className="h-screen bg-gradient-to-b from-slate-50 to-blue-200">
                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-54 font-sans">
                     <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
                     <div className="text-center">
-                        <h1 className="text-5xl font-black text-gray-900 sm:text-7xl transform rotate-1 scale-110 tracking-tight shadow-2xl">
+                        <h1 className="text-5xl font-black text-gray-900 sm:text-7xl transform rotate-3 scale-110 tracking-tight shadow-2xl rounded-full">
                             Bucket Board
                         </h1>
 
