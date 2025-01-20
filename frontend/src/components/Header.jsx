@@ -1,13 +1,32 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { logout } from "../slices/authSlice";
 
 const Header = () => {
+    const { userInfo } = useSelector((state) => state.auth);
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutApiCall] = useLogoutMutation();
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
+
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout());
+            navigate('/');
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     function handleClick() {
         if (collapseMenu.style.display === 'block') {
@@ -16,7 +35,7 @@ const Header = () => {
             collapseMenu.style.display = 'block';
         }
     }
-    const { userInfo } = useSelector((state) => state.auth);
+
 
     return (
         <header className="flex shadow-md py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
@@ -74,7 +93,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="block lg:hidden lg:border-b border-gray-300 lg:py-3 px-3">
-                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]">
+                            <Link to='/bucketlist' className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]" onClick={logoutHandler}>
                                 Logout
                             </Link>
                         </li>
@@ -118,6 +137,7 @@ const Header = () => {
                                     </Link>
                                     <button
                                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                        onClick={logoutHandler}
                                     >
                                         Logout
                                     </button>
