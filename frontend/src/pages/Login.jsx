@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import Spinner from '../components/Spinner';
 
 
 const Login = () => {
@@ -99,6 +100,9 @@ const Login = () => {
                             </div>
 
                             <div className="!mt-8">
+                            { isLoading ? (
+                                <Spinner />
+                            ) : (
                                 <button
                                     type="button"
                                     className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
@@ -106,6 +110,8 @@ const Login = () => {
                                 >
                                     Sign in
                                 </button>
+                            )}
+                                
                             </div>
 
                             <p className="text-sm !mt-8 text-center text-gray-500">
