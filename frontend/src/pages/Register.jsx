@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useResgisterMutation } from "../slices/userApiSlice";
+import { useRegisterMutation } from "../slices/userApiSlice";
 import { toast } from "react-toastify";
 import { setCredentials } from "../slices/authSlice";
 import Spinner from "../components/Spinner";
@@ -16,7 +16,7 @@ const Register = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
 
-    const [register, { isLoading }] = useResgisterMutation();
+    const [register, { isLoading }] = useRegisterMutation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -49,10 +49,6 @@ const Register = () => {
                 toast.error(err?.data?.message || err.error);
             }
         }
-
-
-
-
     }
     return (
         <div className="font-[sans-serif] bg-white max-w-4xl flex items-center mx-auto md:h-screen p-4">
