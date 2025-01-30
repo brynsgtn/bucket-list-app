@@ -88,7 +88,6 @@ const updateIsChecked = asyncHandler(async (req, res) => {
     res.status(200).json(updatedBucket);
 });
 
-module.exports = { updateIsChecked };
 
 
 // @desc Delete bucket list
