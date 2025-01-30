@@ -10,6 +10,10 @@ const bucketlistSchema = mongoose.Schema(
         text: {
             type: String,
             required: true
+        },
+        isChecked: {
+            type: Boolean,
+            default: false
         }
     },
     {
