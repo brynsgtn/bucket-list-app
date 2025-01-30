@@ -58,6 +58,39 @@ const updateBucketlist = asyncHandler(async(req, res) => {
     
 });
 
+// @desc Check/uncheck bucketlist
+// route PUT /api/bucketlist/:id
+// @access Private
+
+const updateIsChecked = asyncHandler(async (req, res) => {
+    const bucket = await Bucketlist.findById(req.params.id);
+
+    if (!bucket) {
+        res.status(404);
+        throw new Error('Bucketlist item not found');
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        res.status(401);
+        throw new Error('User not found');
+    }
+
+    if (bucket.user.toString() !== user.id) {
+        res.status(403);
+        throw new Error('User not authorized');
+    }
+
+    bucket.isChecked = !bucket.isChecked;
+
+    const updatedBucket = await bucket.save();
+
+    res.status(200).json(updatedBucket);
+});
+
+module.exports = { updateIsChecked };
+
+
 // @desc Delete bucket list
 // route DELETE /api/bucketlist/:id
 // @access Private
@@ -89,5 +122,6 @@ export {
     displayBucketlist,
     createBucketlist,
     updateBucketlist,
+    updateIsChecked,
     deleteBucketlist
 };
