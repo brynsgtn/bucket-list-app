@@ -3,7 +3,8 @@ import {
     displayBucketlist,
     createBucketlist,
     updateBucketlist,
-    deleteBucketlist
+    deleteBucketlist,
+    updateIsChecked
 } from '../controllers/bucketlistController.js';
 import { protect } from '../middlewares/authMiddleware.js';
 
@@ -16,5 +17,8 @@ router.route('/')
 router.route('/:id')
     .put(protect, updateBucketlist)
     .delete(protect, deleteBucketlist);
+
+router.route('/:id/toggle')
+    .put(protect, updateIsChecked);
 
 export default router;
