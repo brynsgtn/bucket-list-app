@@ -28,7 +28,7 @@ const createBucketlist = asyncHandler(async(req, res) => {
 });
 
 // @desc Update bucket list
-// route PUT /api/bucketlist/:id/toggle
+// route PUT /api/bucketlist/:id
 // @access Private
 const updateBucketlist = asyncHandler(async(req, res) => {
     const bucket = await Bucketlist.findById(req.params.id);
@@ -59,7 +59,7 @@ const updateBucketlist = asyncHandler(async(req, res) => {
 });
 
 // @desc Check/uncheck bucketlist
-// route PUT /api/bucketlist/:id
+// route PUT /api/bucketlist/:id/toggle
 // @access Private
 
 const updateIsChecked = asyncHandler(async (req, res) => {

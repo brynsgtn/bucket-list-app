@@ -23,7 +23,20 @@ export const bucketlistApiSlice = apiSlice.injectEndpoints({
                 body: data
             }),
         }),
+        editBucketlist: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `${BUCKETLIST_URL}/${id}`,
+                method: 'PUT',
+                body: data,
+            }),
+        }),
+        deleteBucketlist: builder.mutation({
+            query: ({ id }) => ({
+                url: `${BUCKETLIST_URL}/${id}`,
+                method: 'DELETE'
+            }),
+        }),
     }),
 });
 
-export const { useGetBucketlistQuery, useUpdateIsCheckedMutation, useCreateBucketlistMutation } = bucketlistApiSlice;
+export const { useGetBucketlistQuery, useUpdateIsCheckedMutation, useCreateBucketlistMutation, useEditBucketlistMutation, useDeleteBucketlistMutation } = bucketlistApiSlice;
