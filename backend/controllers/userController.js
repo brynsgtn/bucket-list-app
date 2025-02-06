@@ -117,9 +117,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // route DELETE /api/users/:id
 // @access Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
-     // Ensure the request comes from an authenticated admin
+    // Ensure the request comes from an authenticated admin
     const adminUser = await User.findById(req.user);
-    
+
     if (!adminUser || !adminUser.isAdmin) {
         res.status(403);
         throw new Error("Not authorized as an admin");
@@ -142,11 +142,30 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({ id: req.params.id });
 });
 
+// @desc Get all user
+// route GET /api/users
+// @access Private
+const getAllUser = asyncHandler(async (req, res) => {
+
+    // Ensure the request comes from an authenticated admin
+    const adminUser = await User.findById(req.user);
+
+    if (!adminUser || !adminUser.isAdmin) {
+        res.status(403);
+        throw new Error("Not authorized as an admin");
+    }
+
+    const users = await User.find();
+
+    res.status(200).json(users)
+});
+
 export {
     authUser,
     registerUser,
     logoutUser,
     getUserProfile,
     updateUserProfile,
-    deleteUserProfile
+    deleteUserProfile,
+    getAllUser
 };
