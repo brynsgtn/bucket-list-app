@@ -108,15 +108,45 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         });
     } else {
         res.status(404);
-        throw new Error ('User not found');
+        throw new Error('User not found');
     };
 });
 
+
+// @desc Delete user profile
+// route DELETE /api/users/:id
+// @access Private
+const deleteUserProfile = asyncHandler(async (req, res) => {
+     // Ensure the request comes from an authenticated admin
+    const adminUser = await User.findById(req.user);
+    
+    if (!adminUser || !adminUser.isAdmin) {
+        res.status(403);
+        throw new Error("Not authorized as an admin");
+    }
+    console.log(adminUser)
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        res.status(400);
+        throw new Error('User not found');
+    }
+
+    // Prevent an admin from deleting themselves
+    if (req.user._id.toString() === user._id.toString()) {
+        res.status(400);
+        throw new Error("Admin cannot delete their own account");
+    }
+
+    await user.deleteOne();
+    res.status(200).json({ id: req.params.id });
+});
 
 export {
     authUser,
     registerUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    deleteUserProfile
 };
