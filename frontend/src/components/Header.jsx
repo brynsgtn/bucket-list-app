@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLogoutMutation } from "../slices/userApiSlice";
 import { logout } from "../slices/authSlice";
 
@@ -15,6 +15,10 @@ const Header = () => {
 
     const [logoutApiCall] = useLogoutMutation();
 
+    useEffect(() => {
+        console.log(userInfo);
+    }, [userInfo]); // Added userInfo dependency here to log it whenever it changes
+
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -27,16 +31,18 @@ const Header = () => {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     function handleClick() {
-        if (collapseMenu.style.display === 'block') {
-            collapseMenu.style.display = 'none';
-        } else {
-            collapseMenu.style.display = 'block';
+        const collapseMenu = document.getElementById('collapseMenu');
+        if (collapseMenu) {
+            if (collapseMenu.style.display === 'block') {
+                collapseMenu.style.display = 'none';
+            } else {
+                collapseMenu.style.display = 'block';
+            }
         }
     }
-
 
     return (
         <header className="flex shadow-md py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
@@ -46,7 +52,6 @@ const Header = () => {
                         Bucket Board
                     </p>
                 </Link>
-
 
                 <div
                     id="collapseMenu"
@@ -95,6 +100,19 @@ const Header = () => {
                                 My Profile
                             </Link>
                         </li>
+
+                        {userInfo && userInfo.isAdmin && (
+                            <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
+                                <Link
+                                    to="/users"
+                                    className={`block font-semibold text-[15px] ${location.pathname === '/users' ? 'text-[#007bff]' : 'text-gray-500'
+                                        }`}
+                                >
+                                    Manage Users
+                                </Link>
+                            </li>
+                        )}
+
                         <li className="block lg:hidden lg:border-b border-gray-300 lg:py-3 px-3">
                             <button className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]" onClick={logoutHandler}>
                                 Logout
@@ -132,6 +150,12 @@ const Header = () => {
                             {/* Dropdown Menu */}
                             {isDropdownOpen && (
                                 <div className="absolute right-0 w-48 bg-white shadow-md rounded-lg overflow-hidden mt-2 z-50">
+                                    {userInfo.isAdmin && <Link
+                                        to="/users"
+                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
+                                    >
+                                        Manage Users
+                                    </Link>}
                                     <Link
                                         to="/profile"
                                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all"
@@ -161,8 +185,6 @@ const Header = () => {
                             </Link>
                         </>
                     )}
-
-
 
                     <button id="toggleOpen" className="lg:hidden" onClick={handleClick}>
                         <svg

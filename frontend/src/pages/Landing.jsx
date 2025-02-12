@@ -2,10 +2,15 @@ import "@fontsource/inter";
 import "@fontsource/roboto";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Landing = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        console.log(userInfo)
+    }, [userInfo])
 
     return (
         <>

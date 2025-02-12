@@ -15,6 +15,7 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import BucketList from './pages/BucketList.jsx';
 import Profile from './pages/Profile.jsx';
+import Users from './pages/Users.jsx';
 
 
 const router = createBrowserRouter(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       {/* Private Routes */}
       {/* <Route path='' element={<PrivateRoute />}> */}
         <Route path='/profile' element={<Profile />} />
+        <Route path='/users' element={<Users />} />
       {/* </Route> */}
     </Route>
   )

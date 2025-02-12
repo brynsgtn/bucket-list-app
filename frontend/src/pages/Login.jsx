@@ -24,7 +24,7 @@ const Login = () => {
         if (userInfo) {
             navigate('/');
         }
-    },[navigate, userInfo]);
+    },[userInfo, navigate]);
 
     const showPassword = () => {
         setVisible(!visible);
@@ -104,7 +104,7 @@ const Login = () => {
                                 <Spinner />
                             ) : (
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
                                     onClick={submitHandler}
                                 >

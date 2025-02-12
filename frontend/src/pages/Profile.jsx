@@ -30,9 +30,7 @@ const Profile = () => {
     }
 
 
-    useEffect(() => {
-        console.log(userInfo)
-    })
+
     const openModal = () => {
         setIsOpen(true);
     }
