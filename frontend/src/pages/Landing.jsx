@@ -7,11 +7,6 @@ import { useEffect } from "react";
 const Landing = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        console.log(userInfo)
-    }, [userInfo])
-
     return (
         <>
             <div className="h-screen bg-gradient-to-b from-slate-50 to-blue-200">

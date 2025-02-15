@@ -6,7 +6,6 @@ import Spinner from '../components/Spinner';
 import { toast } from 'react-toastify';
 
 const BucketList = () => {
-  const { userInfo } = useSelector((state) => state.auth);
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [check, setCheck] = useState(false);
