@@ -56,6 +56,7 @@ const BucketList = () => {
       }, {});
       setCheck(initialCheckState);
     }
+    refetch();
   }, [data]);
 
   const handleEditBucketListValue = (bucketId) => {
@@ -151,142 +152,141 @@ const BucketList = () => {
 
   return (
     <>
-    <Header />
-{isLoadingList ? (
-  <Spinner />
-) : visibleItems?.length === 0 ? (
-  <div className='h-screen flex flex-col items-center justify-center'>
-    <p className="text-center text-xl text-gray-500 mb-4">
-      You have no item in your bucket list.
-    </p>
-    <button
-      className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-6 py-2"
-      onClick={handleIsOpen}
-    >
-      Add
-    </button>
-  </div>
-) : (
-  <div className="p-4 max-w-xl bg-white rounded-lg border shadow-md sm:p-8 mx-auto mt-20">
-    <div className="flex justify-between items-center mb-4">
-      <h3 className="text-xl font-bold leading-none text-gray-900">
-        Your Bucket List
-      </h3>
-      <button
-        className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-6 py-2"
-        onClick={handleIsOpen}
-      >
-        Add
-      </button>
-    </div>
-    <div>
-      <ul role="list" className="divide-y divide-gray-200">
-        {visibleItems?.map((data) => (
-          <li
-            className="p-5 sm:py-4 group flex justify-between items-center hover:bg-sky-100 rounded-xl"
-            key={data._id}
+      <Header />
+      {isLoadingList ? (
+        <Spinner />
+      ) : visibleItems?.length === 0 ? (
+        <div className='h-screen flex flex-col items-center justify-center'>
+          <p className="text-center text-xl text-gray-500 mb-4">
+            You have no item in your bucket list.
+          </p>
+          <button
+            className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-6 py-2"
+            onClick={handleIsOpen}
           >
-            <div className="flex items-center space-x-4">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2">
-                  {check[data._id] ? (
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      strokeWidth="0"
-                      viewBox="0 0 24 24"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                      onClick={() => handleCheck(data._id)}
-                      className="cursor-pointer"
-                    >
-                      <path
-                        d="M10.2426 16.3137L6 12.071L7.41421 10.6568L10.2426 13.4853L15.8995 7.8284L17.3137 9.24262L10.2426 16.3137Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      strokeWidth="0"
-                      viewBox="0 0 24 24"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                      onClick={() => handleCheck(data._id)}
-                      className="cursor-pointer"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  )}
-                  <p
-                    className={`text-sm font-medium text-gray-900 truncate ${
-                      check[data._id] ? "line-through italic" : ""
-                    }`}
-                  >
-                    {data.text}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Edit & Delete Icons - Appear on Hover */}
-            <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity me-5">
-              <button
-                aria-label="Edit"
-                className="me-2"
-                onClick={() => handleEditBucketListValue(data._id)}
-              >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 1024 1024"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+            Add
+          </button>
+        </div>
+      ) : (
+        <div className="p-4 max-w-xl bg-white rounded-lg border shadow-md sm:p-8 mx-auto mt-20">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold leading-none text-gray-900">
+              Your Bucket List
+            </h3>
+            <button
+              className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-6 py-2"
+              onClick={handleIsOpen}
+            >
+              Add
+            </button>
+          </div>
+          <div>
+            <ul role="list" className="divide-y divide-gray-200">
+              {visibleItems?.map((data) => (
+                <li
+                  className="p-5 sm:py-4 group flex justify-between items-center hover:bg-sky-100 rounded-xl"
+                  key={data._id}
                 >
-                  <path d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 0 0 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 0 0 9.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"></path>
-                </svg>
-              </button>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2">
+                        {check[data._id] ? (
+                          <svg
+                            stroke="currentColor"
+                            fill="none"
+                            strokeWidth="0"
+                            viewBox="0 0 24 24"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                            onClick={() => handleCheck(data._id)}
+                            className="cursor-pointer"
+                          >
+                            <path
+                              d="M10.2426 16.3137L6 12.071L7.41421 10.6568L10.2426 13.4853L15.8995 7.8284L17.3137 9.24262L10.2426 16.3137Z"
+                              fill="currentColor"
+                            ></path>
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+                        ) : (
+                          <svg
+                            stroke="currentColor"
+                            fill="none"
+                            strokeWidth="0"
+                            viewBox="0 0 24 24"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                            onClick={() => handleCheck(data._id)}
+                            className="cursor-pointer"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+                        )}
+                        <p
+                          className={`text-sm font-medium text-gray-900 truncate ${check[data._id] ? "line-through italic" : ""
+                            }`}
+                        >
+                          {data.text}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-              <button
-                aria-label="Delete"
-                className="me-2"
-                onClick={() => handleDeleteItemId(data._id)}
-              >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 1024 1024"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M832 64H704V40c0-4.4-3.6-8-8-8H328c-4.4 0-8 3.6-8 8v24H192c-35.3 0-64 28.7-64 64v64c0 17.7 14.3 32 32 32v672c0 35.3 28.7 64 64 64h576c35.3 0 64-28.7 64-64V224c17.7 0 32-14.3 32-32V128c0-35.3-28.7-64-64-64zM480 832h-64V320h64v512zm128 0h-64V320h64v512zm128 0h-64V320h64v512z"></path>
-                </svg>
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
+                  {/* Edit & Delete Icons - Appear on Hover */}
+                  <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity me-5">
+                    <button
+                      aria-label="Edit"
+                      className="me-2"
+                      onClick={() => handleEditBucketListValue(data._id)}
+                    >
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 1024 1024"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 0 0 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 0 0 9.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"></path>
+                      </svg>
+                    </button>
+
+                    <button
+                      aria-label="Delete"
+                      className="me-2"
+                      onClick={() => handleDeleteItemId(data._id)}
+                    >
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 1024 1024"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M832 64H704V40c0-4.4-3.6-8-8-8H328c-4.4 0-8 3.6-8 8v24H192c-35.3 0-64 28.7-64 64v64c0 17.7 14.3 32 32 32v672c0 35.3 28.7 64 64 64h576c35.3 0 64-28.7 64-64V224c17.7 0 32-14.3 32-32V128c0-35.3-28.7-64-64-64zM480 832h-64V320h64v512zm128 0h-64V320h64v512zm128 0h-64V320h64v512z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
 
 
 
