@@ -18,7 +18,7 @@ const BucketList = () => {
 
   const itemsToShow = 8;
 
-  const { data, fetchError, isLoading: isLoadingList, refetch } = useGetBucketlistQuery();
+  const { data, fetchError, isLoading: isLoadingList, isFetching, refetch } = useGetBucketlistQuery();
   const [updateIsChecked, { updateIsCheckedError }] = useUpdateIsCheckedMutation();
   const [createBucketlist, { createBucketlistError, isLoading: isCreating }] = useCreateBucketlistMutation();
   const [updateBucketlist, { updateBucketlistError, isLoading: isEditing }] = useEditBucketlistMutation();
@@ -153,7 +153,7 @@ const BucketList = () => {
   return (
     <>
       <Header />
-      {isLoadingList ? (
+      {isFetching ? (
         <Spinner />
       ) : visibleItems?.length === 0 ? (
         <div className='h-screen flex flex-col items-center justify-center'>
